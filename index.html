@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Portofolio Risma Destiantri - Mahasiswa Informatika & Web Developer Pemula dari Lampung, Indonesia.">
+<title>Risma Destiantri — Premium Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    /* Dark Theme (Emerald / Forest Theme) */
+    --bg: #0B1913;
+    --surface: rgba(18, 36, 27, 0.7);
+    --surface-2: rgba(26, 51, 38, 0.8);
+    --surface-solid: #12241B;
+    --ink: #F2F8F4;
+    --ink-dim: #94A89C;
+    --line: rgba(255, 255, 255, 0.08);
+    --coral: #FF8A65;
+    --gold: #FFD166;
+    --glacier: #5EEAD4;
+    --shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    --glow-coral: rgba(255, 138, 101, 0.15);
+    --glow-glacier: rgba(94, 234, 212, 0.15);
+    
+    --display: 'Sora', sans-serif;
+    --body: 'Inter', sans-serif;
+    --mono: 'JetBrains Mono', monospace;
+  }
+
+  [data-theme="light"] {
+    /* Light Theme (Ivory / Clean Nature Theme) */
+    --bg: #F4F7F5;
+    --surface: rgba(255, 255, 255, 0.7);
+    --surface-2: rgba(234, 241, 237, 0.8);
+    --surface-solid: #FFFFFF;
+    --ink: #112217;
+    --ink-dim: #5C7365;
+    --line: rgba(17, 34, 23, 0.08);
+    --shadow: 0 20px 40px -10px rgba(17, 34, 23, 0.1);
+    --glow-coral: rgba(255, 138, 101, 0.2);
+    --glow-glacier: rgba(94, 234, 212, 0.2);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--body);
+    line-height: 1.7;
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+  }
+  a { color: inherit; text-decoration: none; }
+  ul { list-style: none; }
+  img { max-width: 100%; display: block; }
+  ::selection { background: var(--coral); color: #000; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  }
+
+  .wrap { max-width: 1200px; margin: 0 auto; padding: 0 40px; }
+  
+  /* Utilities */
+  .glass {
+    background: var(--surface);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--line);
+  }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--coral), var(--gold));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* ============ PRELOADER ============ */
+  .preloader {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    transition: opacity 0.8s ease, visibility 0.8s ease;
+  }
+  .preloader.hidden { opacity: 0; visibility: hidden; }
+  .preloader-mark {
+    font-family: var(--display); font-weight: 800; font-size: 2.5rem; letter-spacing: 0.02em;
+  }
+  .preloader-alt {
+    margin-top: 24px; font-family: var(--mono); font-size: 0.85rem; color: var(--ink-dim);
+    letter-spacing: 0.1em; text-transform: uppercase;
+  }
+  .preloader-track {
+    margin-top: 24px; width: 240px; height: 3px; background: var(--surface-2); overflow: hidden; border-radius: 4px;
+  }
+  .preloader-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--glacier), var(--coral), var(--gold));
+    animation: climb 1.8s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+  }
+  @keyframes climb { to { width: 100%; } }
+
+  /* ============ NAV + ALTIMETER ============ */
+  header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    transition: all 0.3s ease;
+  }
+  header.scrolled {
+    background: var(--surface);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  }
+  nav {
+    max-width: 1200px; margin: 0 auto;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 24px 40px;
+    transition: padding 0.3s ease;
+  }
+  header.scrolled nav { padding: 16px 40px; }
+  
+  .logo {
+    font-family: var(--display); font-weight: 800; font-size: 1.5rem; letter-spacing: 0.02em;
+    position: relative; z-index: 201;
+  }
+  .logo span { color: var(--coral); }
+  
+  .nav-links {
+    display: flex; gap: 36px;
+    font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+    color: var(--ink-dim);
+  }
+  .nav-links a { position: relative; padding: 5px 0; transition: color 0.3s ease; font-weight: 500; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-links a::after {
+    content: ''; position: absolute; left: 0; bottom: 0; width: 0; height: 2px;
+    background: var(--glacier); transition: width 0.3s ease;
+  }
+  .nav-links a:hover::after { width: 100%; }
+
+  .nav-tools { display: flex; align-items: center; gap: 12px; position: relative; z-index: 201; }
+  .tool-btn {
+    width: 42px; height: 42px; border-radius: 50%;
+    border: 1px solid var(--line); background: var(--surface-solid);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; cursor: pointer; color: var(--ink);
+    transition: all 0.3s ease;
+  }
+  .tool-btn:hover { border-color: var(--coral); transform: translateY(-2px); box-shadow: 0 5px 15px var(--glow-coral); }
+  .lang-btn {
+    font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.08em; font-weight: 600;
+    width: auto; padding: 0 16px; border-radius: 20px;
+  }
+
+  /* Mobile Menu Button */
+  .menu-toggle {
+    display: none; flex-direction: column; justify-content: center; gap: 5px;
+    width: 42px; height: 42px; background: transparent; border: none; cursor: pointer;
+    z-index: 201;
+  }
+  .menu-toggle span {
+    display: block; width: 24px; height: 2px; background: var(--ink);
+    transition: all 0.3s ease; margin: 0 auto;
+  }
+  .menu-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .menu-toggle.active span:nth-child(2) { opacity: 0; }
+  .menu-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* Mobile Menu Overlay */
+  .mobile-menu {
+    position: fixed; inset: 0; background: var(--bg); z-index: 200;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .mobile-menu.active { opacity: 1; visibility: visible; }
+  .mobile-nav-links {
+    display: flex; flex-direction: column; gap: 30px; text-align: center;
+    font-family: var(--display); font-size: 2rem; font-weight: 700;
+  }
+  .mobile-nav-links a {
+    transform: translateY(20px); opacity: 0; transition: all 0.4s ease;
+  }
+  .mobile-menu.active .mobile-nav-links a { transform: translateY(0); opacity: 1; }
+  .mobile-menu.active .mobile-nav-links a:nth-child(1) { transition-delay: 0.1s; }
+  .mobile-menu.active .mobile-nav-links a:nth-child(2) { transition-delay: 0.15s; }
+  .mobile-menu.active .mobile-nav-links a:nth-child(3) { transition-delay: 0.2s; }
+  .mobile-menu.active .mobile-nav-links a:nth-child(4) { transition-delay: 0.25s; }
+  .mobile-menu.active .mobile-nav-links a:nth-child(5) { transition-delay: 0.3s; }
+
+  .altimeter {
+    height: 3px; background: var(--surface-solid); position: absolute; bottom: 0; left: 0; width: 100%;
+  }
+  .altimeter-fill {
+    height: 100%; width: 0%;
+    background: linear-gradient(90deg, var(--glacier), var(--coral), var(--gold));
+  }
+
+  /* ============ HERO ============ */
+  .hero {
+    position: relative;
+    padding: 220px 0 160px;
+    border-bottom: 1px solid var(--line);
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex; align-items: center;
+  }
+  /* Animated Background Orbs */
+  .hero-blobs { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .blob {
+    position: absolute; border-radius: 50%; filter: blur(90px); opacity: 0.4;
+    animation: float 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .blob-1 {
+    top: 10%; left: -10%; width: 400px; height: 400px; background: var(--glacier);
+  }
+  .blob-2 {
+    bottom: -10%; right: -5%; width: 500px; height: 500px; background: var(--coral);
+    animation-delay: -6s; animation-direction: reverse;
+  }
+  [data-theme="light"] .blob { opacity: 0.2; }
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -50px) scale(1.1); }
+    66% { transform: translate(-20px, 20px) scale(0.9); }
+  }
+
+  .contour-bg {
+    position: absolute; inset: 0; z-index: 0; opacity: 0.3; pointer-events: none;
+    width: 100%; height: 100%; object-fit: cover;
+  }
+  [data-theme="light"] .contour-bg { opacity: 0.15; }
+  .hero .wrap { position: relative; z-index: 1; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--glacier);
+    display: flex; align-items: center; gap: 16px; margin-bottom: 30px;
+    font-weight: 500;
+  }
+  .eyebrow::before { content: ''; width: 40px; height: 2px; background: var(--glacier); display: inline-block; }
+
+  .hero h1 {
+    font-family: var(--display); font-weight: 800; font-size: clamp(3rem, 7vw, 5.5rem);
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  .hero h2 {
+    font-family: var(--display); font-weight: 500; font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--ink-dim); min-height: 1.8em; margin-bottom: 20px;
+  }
+  #typing { color: var(--coral); border-right: 3px solid var(--coral); padding-right: 6px; animation: blink 0.8s infinite; }
+  @keyframes blink { 50% { border-color: transparent; } }
+
+  .hero p.lead {
+    max-width: 55ch; color: var(--ink-dim); font-size: 1.1rem; line-height: 1.8;
+  }
+  
+  .hero-buttons { margin-top: 48px; display: flex; gap: 20px; flex-wrap: wrap; }
+  .btn {
+    font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em;
+    padding: 18px 36px; border-radius: 8px; border: 1px solid var(--line);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+    position: relative; overflow: hidden;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--coral), var(--gold));
+    color: #000; border-color: transparent; font-weight: 700;
+    box-shadow: 0 10px 20px var(--glow-coral);
+  }
+  .btn-primary:hover {
+    transform: translateY(-4px); box-shadow: 0 15px 25px var(--glow-coral);
+  }
+  .btn-secondary {
+    background: var(--surface); color: var(--ink); font-weight: 600;
+  }
+  .btn-secondary:hover {
+    border-color: var(--glacier); color: var(--glacier); transform: translateY(-4px);
+  }
+
+  .scroll-cue {
+    position: absolute; bottom: 40px; left: 40px; z-index: 1;
+    font-family: var(--mono); font-size: 0.75rem; color: var(--ink-dim); letter-spacing: 0.1em;
+    display: flex; align-items: center; gap: 16px; text-transform: uppercase;
+  }
+  .scroll-cue .line { width: 2px; height: 50px; background: var(--surface-2); position: relative; overflow: hidden; border-radius: 2px;}
+  .scroll-cue .line::after {
+    content: ''; position: absolute; top: -100%; left: 0; width: 100%; height: 100%;
+    background: var(--glacier); animation: trickle 2s ease-in-out infinite;
+  }
+  @keyframes trickle { 0% { top: -100%; } 100% { top: 100%; } }
+
+  /* ============ SECTION SCAFFOLD ============ */
+  section { padding: 140px 0; border-bottom: 1px solid var(--line); position: relative; }
+  .camp-label {
+    display: inline-flex; align-items: center; gap: 16px; margin-bottom: 20px;
+    font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.15em;
+    padding: 8px 16px; border-radius: 30px; background: var(--surface); border: 1px solid var(--line);
+  }
+  .camp-label .elev { color: var(--gold); font-weight: 600; }
+  .camp-label .name { color: var(--ink-dim); }
+  .section-title {
+    font-family: var(--display); font-weight: 800; font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin-bottom: 70px; letter-spacing: -0.01em;
+  }
+
+  /* ============ ABOUT ============ */
+  .about-grid {
+    display: grid; grid-template-columns: 320px 1fr; gap: 80px; align-items: center;
+  }
+  .img-wrapper {
+    position: relative; border-radius: 20px; padding: 10px;
+    background: linear-gradient(135deg, var(--surface-2), var(--surface));
+    box-shadow: var(--shadow);
+  }
+  .img-wrapper::before {
+    content: ''; position: absolute; inset: -1px; border-radius: 22px;
+    background: linear-gradient(135deg, var(--coral), transparent, var(--glacier));
+    z-index: -1; opacity: 0.5; transition: opacity 0.4s ease;
+  }
+  .img-wrapper:hover::before { opacity: 1; }
+  .about-portrait {
+    aspect-ratio: 3/4; border-radius: 14px; overflow: hidden;
+    position: relative;
+  }
+  .about-portrait img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .img-wrapper:hover .about-portrait img { transform: scale(1.05); }
+
+  .about-text h3 {
+    font-family: var(--display); font-size: 1.8rem; font-weight: 700; margin-bottom: 24px;
+  }
+  .about-text p { color: var(--ink-dim); margin-bottom: 20px; font-size: 1.1rem; }
+  .info-list {
+    margin-top: 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    border-top: 1px solid var(--line); padding-top: 32px;
+  }
+  .info-list li { font-size: 1rem; display: flex; flex-direction: column; gap: 5px; }
+  .info-list strong {
+    font-family: var(--mono); font-size: 0.75rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--coral);
+  }
+
+  /* ============ STATS ============ */
+  .stats-strip {
+    padding: 80px 0; border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--surface), transparent);
+    position: relative;
+  }
+  .stats-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center;
+  }
+  .stat-card {
+    padding: 30px; border-radius: 16px; background: var(--surface-solid);
+    border: 1px solid var(--line); transition: transform 0.3s ease;
+  }
+  .stat-card:hover { transform: translateY(-5px); border-color: var(--glacier); }
+  .stat-number {
+    font-family: var(--display); font-weight: 800; font-size: clamp(2.5rem, 5vw, 3.5rem);
+    background: linear-gradient(135deg, var(--glacier), var(--coral));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    line-height: 1; margin-bottom: 10px;
+  }
+  .stat-label {
+    font-family: var(--mono); font-size: 0.8rem; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--ink-dim); font-weight: 500;
+  }
+
+  /* ============ SKILLS ============ */
+  .skills-list { display: flex; flex-direction: column; gap: 32px; max-width: 800px; }
+  .skill-row {
+    display: grid; grid-template-columns: 200px 1fr 60px; align-items: center; gap: 24px;
+  }
+  .skill-name {
+    font-family: var(--display); font-weight: 600; font-size: 1.1rem;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .skill-name i { color: var(--coral); width: 20px; text-align: center; }
+  
+  /* --- ANIMASI LOGO CANVA --- */
+  @keyframes canva-animate {
+    0% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px var(--glacier)); }
+    25% { transform: scale(1.15) rotate(-5deg); filter: drop-shadow(0 0 8px var(--glacier)); }
+    50% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px var(--glacier)); }
+    75% { transform: scale(1.15) rotate(5deg); filter: drop-shadow(0 0 8px var(--glacier)); }
+    100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 0 2px var(--glacier)); }
+  }
+  .icon-animasi {
+    animation: canva-animate 3s infinite ease-in-out;
+    display: inline-block;
+  }
+
+  .skill-track { height: 10px; border-radius: 10px; background: var(--surface-2); overflow: hidden; box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); }
+  .skill-fill {
+    height: 100%; width: 0%; border-radius: 10px;
+    background: linear-gradient(90deg, var(--glacier), var(--coral));
+    transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+    position: relative;
+  }
+  .skill-fill::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    animation: shimmer 2s infinite linear;
+  }
+  @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+  .skill-pct { font-family: var(--mono); font-size: 0.9rem; color: var(--ink-dim); text-align: right; font-weight: 600; }
+
+  /* ============ PROJECTS ============ */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+  .project-card {
+    background: var(--surface-solid); border: 1px solid var(--line); border-radius: 20px; overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex; flex-direction: column;
+  }
+  .project-card:hover {
+    transform: translateY(-10px); border-color: var(--glacier);
+    box-shadow: 0 20px 40px var(--glow-glacier);
+  }
+  .project-thumb {
+    height: 220px; overflow: hidden; position: relative;
+  }
+  .project-thumb img {
+    width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
+  }
+  .project-card:hover .project-thumb img { transform: scale(1.08); }
+  .project-overlay {
+    position: absolute; inset: 0; background: linear-gradient(to top, var(--surface-solid), transparent);
+    opacity: 0.6;
+  }
+  
+  .project-body { padding: 32px; flex-grow: 1; display: flex; flex-direction: column; }
+  .project-body h3 { font-family: var(--display); font-weight: 700; font-size: 1.4rem; margin-bottom: 16px; }
+  .project-tags { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .tag {
+    font-family: var(--mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em;
+    padding: 6px 14px; border-radius: 30px; background: var(--surface-2); color: var(--glacier);
+    border: 1px solid rgba(94, 234, 212, 0.2);
+  }
+  .project-body p { color: var(--ink-dim); font-size: 1rem; margin-bottom: 24px; flex-grow: 1; }
+  .project-link {
+    font-family: var(--mono); font-size: 0.85rem; color: var(--coral); font-weight: 600;
+    display: inline-flex; align-items: center; gap: 8px; transition: gap 0.3s ease;
+    align-self: flex-start;
+  }
+  .project-link:hover { gap: 12px; }
+
+  /* ============ CONTACT ============ */
+  .contact-panel {
+    background: linear-gradient(145deg, var(--surface), var(--surface-solid));
+    border: 1px solid var(--line); border-radius: 30px; padding: 80px 60px; text-align: center;
+    position: relative; overflow: hidden; box-shadow: var(--shadow);
+  }
+  .contact-panel::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: radial-gradient(circle, var(--glow-coral) 0%, transparent 50%);
+    pointer-events: none; z-index: 0; opacity: 0.5;
+  }
+  .contact-panel > * { position: relative; z-index: 1; }
+  .contact-panel p { max-width: 60ch; margin: 0 auto; color: var(--ink-dim); font-size: 1.1rem; }
+  
+  .contact-grid {
+    margin-top: 50px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+  }
+  .contact-item {
+    padding: 40px 24px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 20px;
+    display: flex; flex-direction: column; align-items: center; gap: 16px;
+    transition: all 0.3s ease;
+  }
+  .contact-item:hover { transform: translateY(-8px); border-color: var(--gold); background: var(--surface); }
+  .contact-icon {
+    width: 60px; height: 60px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--coral), var(--gold));
+    display: flex; align-items: center; justify-content: center; font-size: 1.5rem; color: #000;
+    box-shadow: 0 10px 20px var(--glow-coral);
+  }
+  .contact-item strong { font-family: var(--mono); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .contact-item span { color: var(--ink-dim); font-size: 1rem; }
+
+  /* ============ FOOTER ============ */
+  footer {
+    padding: 80px 0 40px; text-align: center;
+    background: var(--surface-solid); border-top: 1px solid var(--line);
+  }
+  .footer-logo {
+    font-family: var(--display); font-weight: 800; font-size: 2rem; letter-spacing: 0.02em; margin-bottom: 30px;
+  }
+  .footer-logo span { color: var(--coral); }
+  
+  .social-row { display: flex; justify-content: center; gap: 24px; margin-bottom: 30px; }
+  .social-row a {
+    width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--line); background: var(--surface);
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: var(--ink-dim);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .social-row a:hover {
+    border-color: var(--glacier); color: #000; background: var(--glacier);
+    transform: translateY(-5px); box-shadow: 0 10px 20px var(--glow-glacier);
+  }
+  footer p { font-family: var(--mono); font-size: 0.85rem; color: var(--ink-dim); }
+  footer p span { color: var(--gold); }
+
+  /* ============ REVEAL ANIMATIONS ============ */
+  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  
+  /* Delay modifiers */
+  .delay-100 { transition-delay: 0.1s; }
+  .delay-200 { transition-delay: 0.2s; }
+
+  /* ============ RESPONSIVE ============ */
+  @media (max-width: 992px) {
+    .nav-links { display: none; }
+    .menu-toggle { display: flex; }
+    .about-grid { grid-template-columns: 1fr; gap: 50px; }
+    .img-wrapper { max-width: 400px; margin: 0 auto; }
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 768px) {
+    .wrap, nav { padding-left: 24px; padding-right: 24px; }
+    header.scrolled nav { padding: 12px 24px; }
+    .hero { padding: 180px 0 120px; text-align: center; }
+    .eyebrow { justify-content: center; }
+    .hero-buttons { justify-content: center; }
+    .scroll-cue { left: 50%; transform: translateX(-50%); }
+    section { padding: 100px 0; }
+    .stats-grid { grid-template-columns: 1fr 1fr; }
+    .skill-row { grid-template-columns: 1fr; gap: 12px; }
+    .skill-pct { text-align: left; }
+    .contact-panel { padding: 50px 24px; border-radius: 20px; }
+  }
+  @media (max-width: 480px) {
+    .stats-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Preloader -->
+<div class="preloader" id="preloader">
+  <div class="preloader-mark">Risma Destiantri</div>
+  <div class="preloader-alt" data-id="Menyiapkan pengalaman..." data-en="Preparing experience...">Menyiapkan pengalaman...</div>
+  <div class="preloader-track"><div class="preloader-fill"></div></div>
+</div>
+
+<!-- Header & Nav -->
+<header id="header">
+  <nav>
+    <div class="logo">RIS<span>MA</span>.</div>
+    <ul class="nav-links">
+      <li><a href="#home" data-id="Beranda" data-en="Home">Beranda</a></li>
+      <li><a href="#about" data-id="Tentang" data-en="About">Tentang</a></li>
+      <li><a href="#skills" data-id="Keahlian" data-en="Skills">Keahlian</a></li>
+      <li><a href="#projects" data-id="Proyek" data-en="Projects">Proyek</a></li>
+      <li><a href="#contact" data-id="Kontak" data-en="Contact">Kontak</a></li>
+    </ul>
+    <div class="nav-tools">
+      <button class="tool-btn lang-btn" id="langBtn" onclick="toggleLang()" title="Ganti bahasa">ID</button>
+      <button class="tool-btn" id="themeBtn" onclick="toggleTheme()" title="Ganti tema"><i class="fas fa-moon"></i></button>
+      <button class="menu-toggle" id="menuToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <div class="altimeter"><div class="altimeter-fill" id="altimeterFill"></div></div>
+</header>
+
+<!-- Mobile Overlay Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-nav-links">
+    <a href="#home" class="mobile-link" data-id="Beranda" data-en="Home">Beranda</a>
+    <a href="#about" class="mobile-link" data-id="Tentang" data-en="About">Tentang</a>
+    <a href="#skills" class="mobile-link" data-id="Keahlian" data-en="Skills">Keahlian</a>
+    <a href="#projects" class="mobile-link" data-id="Proyek" data-en="Projects">Proyek</a>
+    <a href="#contact" class="mobile-link" data-id="Kontak" data-en="Contact">Kontak</a>
+  </div>
+</div>
+
+<main>
+  <!-- HERO SECTION -->
+  <section class="hero" id="home">
+    <div class="hero-blobs">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+    </div>
+    <!-- Decorative Contour -->
+    <svg class="contour-bg" viewBox="0 0 1200 700" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M-50,600 C150,540 300,650 500,580 C700,510 800,600 1050,540 C1150,515 1200,540 1250,520" stroke="var(--glacier)" stroke-width="1.5" fill="none" opacity="0.5"/>
+      <path d="M-50,520 C160,470 320,560 520,500 C720,440 830,520 1060,470 C1160,448 1210,470 1250,455" stroke="var(--coral)" stroke-width="1" fill="none" opacity="0.6"/>
+      <path d="M-50,440 C170,400 330,470 540,420 C740,375 840,440 1070,400 C1170,382 1220,400 1250,390" stroke="var(--gold)" stroke-width="0.8" fill="none" opacity="0.7"/>
+    </svg>
+    
+    <div class="wrap">
+      <div class="eyebrow reveal">0 MDPL — <span data-id="Titik Keberangkatan" data-en="Starting Point">Titik Keberangkatan</span></div>
+      <h1 class="reveal delay-100">Halo, saya <br><span class="gradient-text">Risma Destiantri</span></h1>
+      <h2 class="reveal delay-200">
+        <span data-id="Seorang " data-en="A ">Seorang </span><span id="typing"></span>
+      </h2>
+      <p class="lead reveal delay-200" data-id="Saya membangun pengalaman digital dari fondasi sampai puncak — rapi di detail, kokoh di fungsi, dan memanjakan mata penggunanya." data-en="I build digital experiences from foundation to summit — precise in detail, solid in function, and visually pleasing to the users.">Saya membangun pengalaman digital dari fondasi sampai puncak — rapi di detail, kokoh di fungsi, dan memanjakan mata penggunanya.</p>
+      <div class="hero-buttons reveal delay-200">
+        <a href="#projects" class="btn btn-primary">
+          <span data-id="Lihat Proyek" data-en="View Projects">Lihat Proyek</span>
+          <i class="fas fa-arrow-right"></i>
+        </a>
+        <a href="#contact" class="btn btn-secondary" data-id="Hubungi Saya" data-en="Contact Me">Hubungi Saya</a>
+      </div>
+    </div>
+    <div class="scroll-cue"><div class="line"></div><span data-id="Mulai mendaki" data-en="Start climbing">Mulai mendaki</span></div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section id="about">
+    <div class="wrap">
+      <div class="camp-label reveal">
+        <span class="elev">1.200 MDPL</span>
+        <span class="name" data-id="Camp I — Titik Awal" data-en="Camp I — Starting Point">Camp I — Titik Awal</span>
+      </div>
+      <h2 class="section-title reveal" data-id="Tentang Saya" data-en="About Me">Tentang Saya</h2>
+      
+      <div class="about-grid">
+        <div class="img-wrapper reveal">
+          <div class="about-portrait">
+            <img id="profileImage" src="foto-cima.jpg" alt="Foto Risma Destiantri">
+          </div>
+        </div>
+        <div class="about-text reveal delay-100">
+          <h3 class="gradient-text" data-id="Merangkai Kode, Menciptakan Karya" data-en="Weaving Code, Creating Masterpieces">Merangkai Kode, Menciptakan Karya</h3>
+          
+          <p data-id="Saya adalah mahasiswa Informatika yang sedang mempelajari dunia teknologi dan pengembangan web. Saat ini saya masih berada di tahap pemula, tetapi saya memiliki semangat yang tinggi untuk terus belajar dan mengembangkan kemampuan. Saya tertarik mempelajari dasar-dasar pembuatan website, mulai dari HTML, CSS, JavaScript, hingga berbagai teknologi web lainnya." data-en="I am an Informatics student currently exploring the world of technology and web development. I am still at a beginner stage, but I have a high spirit to keep learning and developing my skills. I am interested in learning the fundamentals of website creation, from HTML, CSS, JavaScript, to various other web technologies.">Saya adalah mahasiswa Informatika yang sedang mempelajari dunia teknologi dan pengembangan web. Saat ini saya masih berada di tahap pemula, tetapi saya memiliki semangat yang tinggi untuk terus belajar dan mengembangkan kemampuan. Saya tertarik mempelajari dasar-dasar pembuatan website, mulai dari HTML, CSS, JavaScript, hingga berbagai teknologi web lainnya.</p>
+          
+          <p data-id="Menurut saya, belajar web bukan hanya tentang membuat tampilan website yang menarik, tetapi juga memahami bagaimana sebuah website dapat berjalan dengan baik dan memberikan manfaat bagi penggunanya. Karena itu, saya terus berusaha meningkatkan kemampuan melalui perkuliahan, latihan mandiri, serta mencoba membuat proyek-proyek sederhana sebagai sarana belajar." data-en="To me, learning web development is not just about making an attractive website, but also understanding how a website can run well and provide benefits to its users. Therefore, I keep striving to improve my abilities through college, self-practice, and trying to build simple projects as a learning medium.">Menurut saya, belajar web bukan hanya tentang membuat tampilan website yang menarik, tetapi juga memahami bagaimana sebuah website dapat berjalan dengan baik dan memberikan manfaat bagi penggunanya. Karena itu, saya terus berusaha meningkatkan kemampuan melalui perkuliahan, latihan mandiri, serta mencoba membuat proyek-proyek sederhana sebagai sarana belajar.</p>
+          
+          <p data-id="Saya percaya bahwa proses belajar membutuhkan waktu, konsistensi, dan kemauan untuk terus mencoba. Sebagai mahasiswa Informatika, saya ingin terus berkembang agar memiliki keterampilan yang dapat diterapkan di dunia kerja maupun dalam berbagai proyek di masa depan." data-en="I believe that the learning process requires time, consistency, and the willingness to keep trying. As an Informatics student, I want to keep growing so I can have skills applicable in the professional world and in various future projects.">Saya percaya bahwa proses belajar membutuhkan waktu, konsistensi, dan kemauan untuk terus mencoba. Sebagai mahasiswa Informatika, saya ingin terus berkembang agar memiliki keterampilan yang dapat diterapkan di dunia kerja maupun dalam berbagai proyek di masa depan.</p>
+          
+          <ul class="info-list">
+            <li><strong data-id="Nama Lengkap" data-en="Full Name">Nama Lengkap</strong><span>Risma Destiantri</span></li>
+            <li><strong data-id="Spesialisasi" data-en="Specialization">Spesialisasi</strong><span>pemula web dev.</span></li>
+            <li><strong data-id="Lokasi" data-en="Location">Lokasi</strong><span data-id="Lampung, Indonesia" data-en="Lampung, Indonesia">Lampung, Indonesia</span></li>
+            <li><strong data-id="Ketersediaan" data-en="Availability">Ketersediaan</strong><span data-id="Terbuka untuk kolaborasi" data-en="Open for collaboration">Terbuka untuk kolaborasi</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS STRIP -->
+  <div class="stats-strip reveal">
+    <div class="wrap stats-grid">
+      <div class="stat-card reveal delay-100"><div class="stat-number" data-target="5">0</div><div class="stat-label" data-id="Proyek Selesai" data-en="Projects Done">Proyek Selesai</div></div>
+      <div class="stat-card reveal delay-100"><div class="stat-number" data-target="3">0</div><div class="stat-label" data-id="Klien Puas" data-en="Happy Clients">Klien Puas</div></div>
+      <div class="stat-card reveal delay-200"><div class="stat-number" data-target="1">0</div><div class="stat-label" data-id="Tahun Pengalaman" data-en="Years Experience">Tahun Pengalaman</div></div>
+      <div class="stat-card reveal delay-200"><div class="stat-number" data-target="100">0</div><div class="stat-label" data-id="Semangat Belajar" data-en="Learning Spirit">Semangat Belajar</div></div>
+    </div>
+  </div>
+
+  <!-- SKILLS SECTION -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="camp-label reveal">
+        <span class="elev">2.400 MDPL</span>
+        <span class="name" data-id="Camp II — Perlengkapan" data-en="Camp II — Gear">Camp II — Perlengkapan</span>
+      </div>
+      <h2 class="section-title reveal" data-id="Keahlian Teknis" data-en="Technical Skills">Keahlian Teknis</h2>
+      
+      <div class="skills-list">
+        <div class="skill-row reveal">
+          <span class="skill-name"><i class="fab fa-html5"></i> HTML &amp; CSS</span>
+          <div class="skill-track"><div class="skill-fill" data-width="75"></div></div>
+          <span class="skill-pct">65%</span>
+        </div>
+        <div class="skill-row reveal">
+          <span class="skill-name"><i class="fab fa-js"></i> JavaScript</span>
+          <div class="skill-track"><div class="skill-fill" data-width="60"></div></div>
+          <span class="skill-pct">60%</span>
+        </div>
+        <div class="skill-row reveal">
+          <span class="skill-name"><i class="fas fa-code"></i> C++</span>
+          <div class="skill-track"><div class="skill-fill" data-width="50"></div></div>
+          <span class="skill-pct">50%</span>
+        </div>
+        <div class="skill-row reveal">
+          <!-- Logo SVG online ditambah dengan class animasi CSS "icon-animasi" -->
+          <span class="skill-name">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Canva_icon_2021.svg" alt="Canva Logo" class="icon-animasi" style="width: 24px; height: 24px; object-fit: contain;"> 
+            Canva
+          </span>
+          <div class="skill-track"><div class="skill-fill" data-width="65"></div></div>
+          <span class="skill-pct">80%</span>
+        </div>
+        <div class="skill-row reveal">
+          <span class="skill-name"><i class="fab fa-github"></i> Git & GitHub</span>
+          <div class="skill-track"><div class="skill-fill" data-width="70"></div></div>
+          <span class="skill-pct">70%</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS SECTION -->
+  <section id="projects">
+    <div class="wrap">
+      <div class="camp-label reveal">
+        <span class="elev">3.000 MDPL</span>
+        <span class="name" data-id="Camp III — Jejak Pendakian" data-en="Camp III — Trail of Ascent">Camp III — Jejak Pendakian</span>
+      </div>
+      <h2 class="section-title reveal" data-id="Karya Unggulan" data-en="Featured Works">Karya Unggulan</h2>
+      
+      <div class="projects-grid">
+        <!-- Project 1 -->
+        <div class="project-card reveal">
+          <div class="project-thumb">
+            <img src="https://placehold.co/600x400/12241B/FF8A65?text=Snake+Game" alt="Project 1">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-body">
+            <h3 data-id="Dashboard Segmentasi Wisata" data-en="Tourism Segmentation Dashboard">Dashboard Segmentasi Wisata</h3>
+            <div class="project-tags">
+              <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span>
+            </div>
+            <p data-id="Platform dashboard interaktif untuk memetakan dan mensegmentasi potensi pariwisata berdasarkan data analitik wisatawan real-time." data-en="Interactive dashboard platform for mapping and segmenting tourism potential based on real-time tourist analytics data.">Platform dashboard interaktif untuk memetakan dan mensegmentasi potensi pariwisata berdasarkan data analitik wisatawan real-time.</p>
+            <a href="https://ridannuroziqinnoob123-crypto.github.io/game-snake-" target="_blank" class="project-link">
+              <span data-id="Lihat Demo" data-en="Live Demo">Lihat Demo</span> <i class="fas fa-external-link-alt"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Project 2: CANVA PROJECT -->
+        <div class="project-card reveal delay-100">
+          <div class="project-thumb">
+            <img src="https://placehold.co/600x400/12241B/5EEAD4?text=Canva+Project" alt="Project 2">
+            <div class="project-overlay"></div>
+          </div>
+          <div class="project-body">
+            <h3 data-id="Proyek Canva" data-en="Canva Project">Proyek Canva</h3>
+            <div class="project-tags">
+              <span class="tag">Canva</span><span class="tag">Desain Grafis</span><span class="tag">Branding</span>
+            </div>
+            <p data-id="Kumpulan desain visual yang menarik dan profesional dibuat menggunakan Canva untuk kebutuhan presentasi, media sosial, dan branding." data-en="A collection of attractive and professional visual designs created using Canva for presentations, social media, and branding needs.">Kumpulan desain visual yang menarik dan profesional dibuat menggunakan Canva untuk kebutuhan presentasi, media sosial, dan branding.</p>
+            <a href="https://canva.link/wpkjx058x989iv5" target="_blank" class="project-link">
+              <span data-id="Lihat Detail" data-en="View Details">Lihat Detail</span> <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section id="contact">
+    <div class="wrap">
+      <div class="camp-label reveal">
+        <span class="elev"><i class="fas fa-flag"></i></span>
+        <span class="name" data-id="Puncak — Titik Temu" data-en="Summit — Meeting Point">Puncak — Titik Temu</span>
+      </div>
+      
+      <div class="contact-panel reveal">
+        <h2 class="section-title" style="margin-bottom:24px;" data-id="Mari Berkolaborasi" data-en="Let's Collaborate">Mari Berkolaborasi</h2>
+        <p data-id="Punya ide proyek hebat atau sekadar ingin menyapa? Jangan ragu untuk menghubungi saya melalui kontak di bawah ini. Saya selalu terbuka untuk peluang baru dan diskusi seputar teknologi." data-en="Have a great project idea or just want to say hi? Feel free to reach out through the contacts below. I'm always open to new opportunities and tech discussions.">Punya ide proyek hebat atau sekadar ingin menyapa? Jangan ragu untuk menghubungi saya melalui kontak di bawah ini. Saya selalu terbuka untuk peluang baru dan diskusi seputar teknologi.</p>
+        
+        <div class="contact-grid">
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+            <div>
+              <strong data-id="Telepon / WA" data-en="Phone / WA">Telepon / WA</strong>
+              <br><span>0838-0784-8255</span>
+            </div>
+          </div>
+          <a href="mailto:destriantririsma@gmail.com" class="contact-item">
+            <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+            <div>
+              <strong data-id="Email" data-en="Email">Email</strong>
+              <br><span>destriantririsma@gmail.com</span>
+            </div>
+          </a>
+          <div class="contact-item">
+            <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <div>
+              <strong data-id="Lokasi" data-en="Location">Lokasi</strong>
+              <br><span data-id="Lampung, Indonesia" data-en="Lampung, Indonesia">Lampung, Indonesia</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-logo">RIS<span>MA</span>.</div>
+    <div class="social-row">
+      <a href="https://github.com/rismadestriantr8388-ctrl" title="GitHub" target="_blank"><i class="fab fa-github"></i></a>
+      <a href="https://www.instagram.com/_dstrixx/" title="Instagram" target="_blank"><i class="fab fa-instagram"></i></a>
+    </div>
+    <p>
+      &copy; 2026 <span>Risma Destiantri</span>. 
+      <span data-id="Hak cipta dilindungi." data-en="All rights reserved.">Hak cipta dilindungi.</span>
+    </p>
+  </div>
+</footer>
+
+<script>
+  // ---- PRELOADER ----
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      document.getElementById('preloader').classList.add('hidden');
+    }, 1500);
+  });
+
+  // ---- HEADER SCROLL EFFECT ----
+  const header = document.getElementById('header');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      header.classList.add('scrolled');
+    } else {
+      header.classList.remove('scrolled');
+    }
+  });
+
+  // ---- MOBILE MENU TOGGLE ----
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const mobileLinks = document.querySelectorAll('.mobile-link');
+
+  function toggleMobileMenu() {
+    menuToggle.classList.toggle('active');
+    mobileMenu.classList.toggle('active');
+    document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+  }
+
+  menuToggle.addEventListener('click', toggleMobileMenu);
+  
+  mobileLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (mobileMenu.classList.contains('active')) {
+        toggleMobileMenu();
+      }
+    });
+  });
+
+  // ---- LANGUAGE TOGGLE ----
+  let currentLang = localStorage.getItem('Risma-lang') || 'id';
+  function setLanguage(lang) {
+    currentLang = lang;
+    localStorage.setItem('Risma-lang', lang);
+    document.documentElement.lang = lang;
+    document.querySelectorAll('[data-id][data-en]').forEach(el => {
+      if(el.placeholder) {
+          el.placeholder = el.getAttribute('data-' + lang);
+      } else {
+          el.innerHTML = el.getAttribute('data-' + lang);
+      }
+    });
+    document.getElementById('langBtn').textContent = lang.toUpperCase();
+  }
+  function toggleLang() { setLanguage(currentLang === 'id' ? 'en' : 'id'); }
+
+  // ---- THEME TOGGLE ----
+  let currentTheme = localStorage.getItem('Risma-theme') || 'dark';
+  const themeIcon = document.querySelector('#themeBtn i');
+  
+  function applyTheme(theme) {
+    currentTheme = theme;
+    localStorage.setItem('Risma-theme', theme);
+    if (theme === 'light') {
+      document.documentElement.setAttribute('data-theme', 'light');
+      themeIcon.className = 'fas fa-sun';
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      themeIcon.className = 'fas fa-moon';
+    }
+  }
+  function toggleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+
+  // ---- TYPING EFFECT ----
+  const typingTexts = ['Mahasiswa Informatika.', 'Tech Enthusiast.'];
+  let textIndex = 0, charIndex = 0, isDeleting = false;
+  const typingEl = document.getElementById('typing');
+  
+  function type() {
+    const current = typingTexts[textIndex];
+    typingEl.textContent = isDeleting ? current.substring(0, charIndex - 1) : current.substring(0, charIndex + 1);
+    charIndex += isDeleting ? -1 : 1;
+    
+    let speed = isDeleting ? 30 : 100;
+    
+    if (!isDeleting && charIndex === current.length) { 
+      speed = 2000; 
+      isDeleting = true; 
+    } else if (isDeleting && charIndex === 0) { 
+      isDeleting = false; 
+      textIndex = (textIndex + 1) % typingTexts.length; 
+      speed = 500; 
+    }
+    
+    setTimeout(type, speed);
+  }
+
+  // ---- SCROLL REVEAL + COUNTERS + SKILL BARS ----
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        
+        entry.target.querySelectorAll('.skill-fill').forEach(bar => {
+          setTimeout(() => {
+            bar.style.width = bar.getAttribute('data-width') + '%';
+          }, 300);
+        });
+        
+        entry.target.querySelectorAll('.stat-number').forEach(counter => {
+          const target = +counter.getAttribute('data-target');
+          let current = 0;
+          const duration = 2000;
+          const steps = 60;
+          const stepValue = target / steps;
+          
+          const tick = () => {
+            current += stepValue;
+            if (current < target) {
+              counter.textContent = Math.ceil(current) + '+';
+              setTimeout(tick, duration / steps);
+            } else {
+              counter.textContent = target + '+';
+            }
+          };
+          tick();
+        });
+        
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
+  
+  reveals.forEach(el => io.observe(el));
+
+  // ---- ALTIMETER SCROLL PROGRESS ----
+  const altFill = document.getElementById('altimeterFill');
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const scrolled = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    altFill.style.width = Math.min(scrolled, 100) + '%';
+  });
+
+  // ---- INIT ----
+  applyTheme(currentTheme);
+  setLanguage(currentLang);
+  setTimeout(type, 1500);
+</script>
+
+</body>
+</html>
